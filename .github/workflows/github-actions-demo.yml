@@ -1,0 +1,25 @@
+name: actions_on_main_branch
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  job1:
+    name: check_adminA
+    runs-on: ubuntu-latest
+    env:
+      NAME_ADMIN: bralkor
+      NAME_TRUSTED: none
+    steps:
+      - name: st1
+        if: ${{ github.actor == env.NAME_ADMIN }}
+        run: echo "ok"
+      - name: st2
+        if: ${{ github.actor == env.NAME_TRUSTED }}
+        run: echo "ok"
+      - name: st3
+        if: ${{ github.actor != env.NAME_ADMIN }}
+        run: exit 1
